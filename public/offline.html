@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>delimt — offline</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #080808;
+      color: #e8e8e0;
+      font-family: 'Courier New', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+    .logo { color: #FF3333; font-size: 11px; letter-spacing: 4px; margin-bottom: 32px; }
+    h1 { font-size: 28px; font-weight: 900; margin-bottom: 16px; line-height: 1.2; }
+    p { color: #666; font-size: 14px; line-height: 1.8; max-width: 300px; margin: 0 auto 32px; }
+    .red { color: #FF3333; }
+    button {
+      padding: 14px 28px;
+      background: #FF3333;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="logo">⚡ DELIMT</div>
+    <h1>You're <span class="red">offline.</span></h1>
+    <p>
+      The urge doesn't care about your connection.
+      Take a breath. Step away. You've got this without me.
+    </p>
+    <button onclick="window.location.reload()">Try reconnecting →</button>
+  </div>
+</body>
+</html>

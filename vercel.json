@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "crons": [
+    {
+      "path": "/api/drip-emails",
+      "schedule": "0 9 * * *"
+    }
+  ]
+}
