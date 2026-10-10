@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "delimt",
+    "slug": "delimt-android",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "delimt",
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "package": "com.delimt.app",
+      "versionCode": 1,
+      "softwareKeyboardLayoutMode": "resize"
+    },
+    "plugins": ["expo-font"],
+    "web": { "bundler": "metro" }
+  }
+}

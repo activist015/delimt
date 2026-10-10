@@ -4,7 +4,7 @@
  * to a different habit. Callers supply their authenticated Supabase client.
  */
 export const MAX_REASON_LENGTH = 140;
-const HABIT_FIELDS = "id,user_id,name,emoji,why,excuse";
+const HABIT_FIELDS = "id,user_id,name,emoji,why,excuse,active";
 
 function requiredId(value, label) {
   if (typeof value !== "string" || !value.trim()) {
@@ -31,6 +31,7 @@ function readHabit(row, userId) {
     emoji: row.emoji ?? "",
     why: row.why ?? "",
     excuse: row.excuse ?? "",
+    active: row.active !== false,
   };
 }
 
@@ -58,7 +59,8 @@ export function createHabitRepository(supabase) {
       const { data, error } = await supabase
         .from("habits")
         .select(HABIT_FIELDS)
-        .eq("user_id", userId);
+        .eq("user_id", userId)
+        .eq("active", true);
       if (error) throw error;
       if (!Array.isArray(data)) throw new Error("Could not load your habits.");
       return data.map((row) => readHabit(row, userId));
@@ -73,11 +75,13 @@ export function createHabitRepository(supabase) {
         .update({ why })
         .eq("user_id", userId)
         .eq("id", habitId)
+        .eq("active", true)
         .select(HABIT_FIELDS)
         .single();
       if (error) throw error;
       const habit = readHabit(data, userId);
-      if (habit.id !== habitId) throw new Error("The saved habit did not match.");
+      if (habit.id !== habitId)
+        throw new Error("The saved habit did not match.");
       return habit;
     },
   };
@@ -89,12 +93,20 @@ export function habitForApp({ habits, bindings, packageName, userId }) {
   if (typeof packageName !== "string" || !packageName) return null;
   if (!bindings || !Object.hasOwn(bindings, packageName)) return null;
   const habitId = bindings[packageName];
-  return habits.find((habit) => habit.id === habitId && habit.user_id === userId) ?? null;
+  return (
+    habits.find(
+      (habit) =>
+        habit.id === habitId &&
+        habit.user_id === userId &&
+        habit.active !== false,
+    ) ?? null
+  );
 }
 
 /** Build the same habit payload already consumed by api/intervene.js. */
 export function interventionHabit(habit) {
-  if (!habit) throw new Error("Choose a habit before starting an intervention.");
+  if (!habit)
+    throw new Error("Choose a habit before starting an intervention.");
   const validated = readHabit(habit, requiredId(habit.user_id, "Habit owner"));
   return {
     id: validated.id,
