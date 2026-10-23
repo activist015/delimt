@@ -12,7 +12,7 @@ export default function Privacy() {
       <div style={s.container}>
         <div style={s.label}>LEGAL</div>
         <h1 style={s.h1}>Privacy Policy</h1>
-        <p style={s.updated}>Last updated: June 2026</p>
+        <p style={s.updated}>Last updated: 23 October 2026</p>
 
         <p style={s.p}>
           delimt ("we", "our", "us") respects your privacy. This policy explains
@@ -29,6 +29,14 @@ export default function Privacy() {
         <p style={s.p}>
           We log intervention conversations and outcomes (resisted / gave in)
           to power your streak tracking and history.
+        </p>
+
+        <h2 style={s.h2}>Android App Protection</h2>
+        <p style={s.p}>
+          If you enable app protection, Delimt uses Android Accessibility to
+          recognise when an app you selected opens and display a pause screen.
+          App selections and protection settings are stored on your device.
+          You can turn off this permission in Android settings.
         </p>
 
         <h2 style={s.h2}>How We Use Your Data</h2>
@@ -58,6 +66,11 @@ export default function Privacy() {
           Each of these providers has their own privacy policy governing how
           they process data on our behalf.
         </p>
+        <p style={s.p}>
+          When you use AI chat, your selected habit context and the conversation
+          you send are processed by Groq to generate a reply. AI conversations
+          require an internet connection.
+        </p>
 
         <h2 style={s.h2}>Data Retention</h2>
         <p style={s.p}>
@@ -68,8 +81,8 @@ export default function Privacy() {
 
         <h2 style={s.h2}>Your Rights</h2>
         <p style={s.p}>
-          You can access, correct, or delete your personal information at any
-          time through the Settings page, or by emailing us directly.
+          You can edit your profile and habits in Delimt. To request an export
+          of your data or deletion of your account, email hello@delimt.com.
         </p>
 
         <h2 style={s.h2}>Children's Privacy</h2>

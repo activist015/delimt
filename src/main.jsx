@@ -10,6 +10,7 @@ import BlogPost from "./BlogPost.jsx";
 import AppShell from "./AppShell.jsx";
 import Privacy from "./Privacy";
 import Terms from "./Terms";
+import Download from "./Download.jsx";
 
 inject();
 
@@ -38,6 +39,7 @@ function Root() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<App />} />
+          <Route path="/download" element={<Download />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
