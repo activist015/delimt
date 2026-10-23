@@ -11,6 +11,7 @@ import AppShell from "./AppShell.jsx";
 import Privacy from "./Privacy";
 import Terms from "./Terms";
 import Download from "./Download.jsx";
+import Pricing from "./Pricing.jsx";
 
 inject();
 
@@ -40,6 +41,7 @@ function Root() {
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/download" element={<Download />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
