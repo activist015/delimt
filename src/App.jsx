@@ -106,12 +106,12 @@ export default function App() {
       <div style={s.glow} />
 
       {/* NAV */}
-      <nav style={s.nav}>
+      <nav style={s.nav} className="landing-nav">
         <img src={logo} alt="delimt" style={{ height: 36 }} />
         <div style={s.navRight}>
-          <Link to="/blog" style={s.navLink}>Blog</Link>
+          <Link to="/blog" style={s.navLink} className="landing-nav-optional">Blog</Link>
           <Link to="/auth" style={s.navLink}>Sign in</Link>
-          <Link to="/auth" style={s.navCta}>Get delimt free →</Link>
+          <Link to="/download" style={s.navCta}>Get the Android app →</Link>
         </div>
       </nav>
 
@@ -123,14 +123,14 @@ export default function App() {
           <span style={s.dim}>before it stops you.</span>
         </h1>
         <p style={s.sub}>
-          Not a passive blocker. An active AI agent that knows your psychology,
-          intercepts your worst moments, and argues you out of your bad decisions — in real time.
+          Pause the apps you choose. Talk through the urge with AI, remember
+          your reason, and give yourself a moment to choose differently.
         </p>
         <div style={s.heroCtas}>
-          <Link to="/auth" style={s.btnPrimary}>Get delimt free →</Link>
-          <a href="#pricing" style={s.btnSecondary}>See pricing</a>
+          <Link to="/download" style={s.btnPrimary}>Download for Android ↓</Link>
+          <Link to="/app" style={s.btnSecondary}>Use the web app</Link>
         </div>
-        <p style={s.hint}>Free forever plan · No credit card required · Installs on your phone</p>
+        <p style={s.hint}>Android APK available now · iPhone and desktop can use the web app</p>
       </section>
 
       {/* HOW IT WORKS */}
@@ -138,9 +138,9 @@ export default function App() {
         <div style={s.sectionLabel}>HOW IT WORKS</div>
         <div style={s.steps}>
           {[
-            { n: "01", title: "Tell delimt your weakness", desc: "Your habit, your usual excuses, your reason to stop. The more it knows, the harder it fights." },
-            { n: "02", title: "Hit your trigger moment", desc: "About to open Instagram at 1am? Eyeing that checkout button? Open delimt and tap 'I need help'." },
-            { n: "03", title: "The AI argues back", desc: "Not a generic warning. A personalised, psychologically-targeted argument built around YOU." },
+            { n: "01", title: "Choose a habit and your reason", desc: "Tell Delimt what you want to change and what you want to make room for." },
+            { n: "02", title: "Set a boundary on Android", desc: "Choose the apps you want to pause and enable app protection. Delimt steps in when you open one." },
+            { n: "03", title: "Take a moment to choose", desc: "See your reason, talk through the urge with AI, and log how it went. You can also start a conversation yourself." },
           ].map((step) => (
             <div key={step.n} style={s.step}>
               <div style={s.stepNum}>{step.n}</div>
@@ -178,21 +178,23 @@ export default function App() {
         </div>
       </section>
 
-      {/* PWA INSTALL */}
+      {/* ANDROID DOWNLOAD */}
       <section style={s.section}>
-        <div style={s.sectionLabel}>INSTALL ON YOUR PHONE</div>
+        <div style={s.sectionLabel}>DELIMT, WITH YOU</div>
         <div style={s.installGrid}>
           <div style={s.installCard}>
-            <div style={s.installTitle}>📱 Android (Chrome)</div>
+            <div style={s.installTitle}>The Android app</div>
             <div style={s.installSteps}>
-              Open delimt.com in Chrome → tap the three-dot menu → "Add to Home Screen" → Install
+              Download the APK, sign in, and choose which apps to pause. The installation guide walks you through app protection.
             </div>
+            <Link to="/download" style={{ ...s.navLink, color: "#f0f0e8", display: "inline-block", marginTop: 18 }}>Download & installation guide →</Link>
           </div>
           <div style={s.installCard}>
-            <div style={s.installTitle}>🍎 iPhone (Safari)</div>
+            <div style={s.installTitle}>iPhone and desktop</div>
             <div style={s.installSteps}>
-              Open delimt.com in Safari → tap Share button → "Add to Home Screen" → Add
+              Use Delimt in your browser for conversations, habits, and history. App blocking is available in the Android app.
             </div>
+            <Link to="/app" style={{ ...s.navLink, color: "#f0f0e8", display: "inline-block", marginTop: 18 }}>Open the web app →</Link>
           </div>
         </div>
       </section>
@@ -210,7 +212,7 @@ export default function App() {
                 <div key={p} style={s.planPerk}>✓ {p}</div>
               ))}
             </div>
-            <Link to="/auth" style={{ ...s.btnFounding, marginTop: 16, display: "block", textAlign: "center", textDecoration: "none" }}>
+            <Link to="/download" style={{ ...s.btnFounding, marginTop: 16, display: "block", textAlign: "center", textDecoration: "none" }}>
               Get started free →
             </Link>
           </div>
@@ -285,6 +287,7 @@ export default function App() {
         <div style={s.footerTop}>
           <img src={logo} alt="delimt" style={{ height: 28, opacity: 0.6 }} />
           <div style={s.footerLinks}>
+            <Link to="/download" style={s.footerLink}>Android download</Link>
             <Link to="/blog" style={s.footerLink}>Blog</Link>
             <Link to="/privacy" style={s.footerLink}>Privacy Policy</Link>
             <Link to="/terms" style={s.footerLink}>Terms of Service</Link>
@@ -302,6 +305,13 @@ export default function App() {
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #080808; }
+        @media (max-width:600px) {
+          .landing-nav { padding:18px 20px!important; }
+          .landing-nav img { height:28px!important; }
+          .landing-nav>div { gap:12px!important; }
+          .landing-nav a { font-size:11px!important; letter-spacing:0!important; }
+          .landing-nav-optional { display:none; }
+        }
       `}</style>
     </div>
   );
@@ -319,26 +329,26 @@ const s = {
   pill: { display: "inline-block", fontSize: 11, letterSpacing: "3px", color: "#888", textTransform: "uppercase", border: "1px solid #222", borderRadius: 20, padding: "6px 16px", marginBottom: 28 },
   h1: { fontSize: "clamp(32px,7vw,64px)", fontWeight: 900, lineHeight: 1.1, marginBottom: 24, letterSpacing: "-1px", minHeight: "2.5em" },
   red: { color: "#FF3333" },
-  dim: { color: "#444" },
-  sub: { fontSize: 16, color: "#666", lineHeight: 1.8, maxWidth: 520, margin: "0 auto 40px" },
+  dim: { color: "#a0a69b" },
+  sub: { fontSize: 16, color: "#a0a69b", lineHeight: 1.8, maxWidth: 520, margin: "0 auto 40px" },
   heroCtas: { display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", marginBottom: 16 },
   btnPrimary: { padding: "16px 32px", background: "#FF3333", color: "#fff", borderRadius: 8, textDecoration: "none", fontSize: 14, fontWeight: 700, letterSpacing: "1px" },
   btnSecondary: { padding: "16px 32px", background: "transparent", border: "1px solid #333", color: "#aaa", borderRadius: 8, textDecoration: "none", fontSize: 14, letterSpacing: "1px" },
-  hint: { fontSize: 12, color: "#444", letterSpacing: "1px" },
+  hint: { fontSize: 12, color: "#a0a69b", letterSpacing: "1px" },
   section: { position: "relative", zIndex: 1, maxWidth: 860, margin: "0 auto", padding: "60px 24px", borderTop: "1px solid #111" },
   sectionLabel: { fontSize: 10, letterSpacing: "4px", color: "#FF3333", textTransform: "uppercase", marginBottom: 32 },
   steps: { display: "flex", flexDirection: "column", gap: 28 },
   step: { display: "flex", gap: 24, alignItems: "flex-start" },
   stepNum: { fontSize: 11, color: "#FF3333", letterSpacing: "2px", minWidth: 32, paddingTop: 2 },
   stepTitle: { fontSize: 17, fontWeight: 700, marginBottom: 6 },
-  stepDesc: { fontSize: 14, color: "#666", lineHeight: 1.7 },
+  stepDesc: { fontSize: 14, color: "#a0a69b", lineHeight: 1.7 },
   habits: { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 12 },
   habitCard: { padding: "20px 18px", borderRadius: 10, border: "1px solid #1a1a1a", background: "#0f0f0f", display: "flex", alignItems: "center", transition: "all 0.2s" },
   habitLabel: { fontSize: 13, fontWeight: 600 },
-  installGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 16 },
+  installGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,260px),1fr))", gap: 16 },
   installCard: { background: "#0f0f0f", border: "1px solid #1a1a1a", borderRadius: 12, padding: 24 },
   installTitle: { fontSize: 15, fontWeight: 700, marginBottom: 10 },
-  installSteps: { fontSize: 13, color: "#666", lineHeight: 1.8 },
+  installSteps: { fontSize: 13, color: "#a0a69b", lineHeight: 1.8 },
   pricing: { display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 16 },
   priceCard: { background: "#0f0f0f", border: "1px solid #1a1a1a", borderRadius: 12, padding: 24, position: "relative" },
   planBadge: { fontSize: 10, letterSpacing: "2px", color: "#FF3333", background: "#1a0505", borderRadius: 4, padding: "3px 8px", display: "inline-block", marginBottom: 12 },
