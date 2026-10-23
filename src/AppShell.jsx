@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 import { supabase } from "./supabase";
+import { applyPendingReferral } from "./profileReferral";
 import { Icons } from "./icons";
 import Dashboard from "./pages/Dashboard";
 import Intervention from "./pages/Intervention";
@@ -16,6 +17,12 @@ export default function AppShell() {
   const [showNewHabit, setShowNewHabit] = useState(false);
   const [showInstallBanner, setShowInstallBanner] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  // Apply a pending invitation after Google or email confirmation returns.
+  // The database owns counters; this browser can update only its own claim.
+  useEffect(() => {
+    if (user?.id) void applyPendingReferral(supabase, user.id, localStorage);
+  }, [user?.id]);
 
   // Send welcome email exactly once, regardless of signup method
   useEffect(() => {
