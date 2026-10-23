@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { supabase } from "./supabase";
+import { applyPendingReferral, captureReferral } from "./profileReferral";
 import logo from "./logo.svg";
 
 export default function Auth() {
@@ -16,34 +17,8 @@ export default function Auth() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const ref = params.get("ref");
-    if (ref) localStorage.setItem("delimt_ref", ref);
+    captureReferral(localStorage, window.location.search);
   }, []);
-
-  const applyReferral = async (newUserId) => {
-    const refCode = localStorage.getItem("delimt_ref");
-    if (!refCode) return;
-
-    await supabase
-      .from("profiles")
-      .update({ referred_by: refCode })
-      .eq("id", newUserId);
-
-    const { data: referrer } = await supabase
-      .from("profiles")
-      .select("id, referral_count")
-      .eq("referral_code", refCode)
-      .single();
-
-    if (referrer) {
-      await supabase
-        .from("profiles")
-        .update({ referral_count: (referrer.referral_count || 0) + 1 })
-        .eq("id", referrer.id);
-    }
-    localStorage.removeItem("delimt_ref");
-  };
 
   const handle = async () => {
     if (!email.includes("@") || password.length < 6) {
@@ -58,7 +33,8 @@ export default function Auth() {
       if (error) {
         setError(error.message);
       } else {
-        if (data?.user) await applyReferral(data.user.id);
+        if (data?.session?.user)
+          await applyPendingReferral(supabase, data.session.user.id, localStorage);
         navigate("/app");
       }
     } else {

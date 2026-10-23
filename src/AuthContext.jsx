@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "./supabase";
+import { pendingReferral } from "./profileReferral";
 
 const AuthContext = createContext({});
 
@@ -28,9 +29,9 @@ export function AuthProvider({ children }) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name } },
+      options: { data: { name, referred_by: pendingReferral(localStorage) } },
     });
-    if (!error && data.user) {
+    if (!error && data.session?.user) {
       await supabase
         .from("profiles")
         .update({ name })
