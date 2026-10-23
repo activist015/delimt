@@ -1,37 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "./logo.svg";
 import { androidSizeLabel, isAndroidReleaseReady } from "./androidRelease";
 import androidRelease from "./android-release.json";
-import { captureReferral } from "./profileReferral";
+import { Arrow, MarketingHeader, MarketingFooter, useMarketingPage } from "./marketing";
+import "./marketing.css";
 import "./download.css";
-
-function Arrow({ down = false }) {
-  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ transform: down ? "rotate(90deg)" : undefined }}>
-    <path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>;
-}
 
 export default function Download() {
   const [downloadOpened, setDownloadOpened] = useState(false);
   const ready = isAndroidReleaseReady(androidRelease);
 
-  useEffect(() => {
-    const title = document.title;
-    document.title = "Download Delimt for Android";
-    try { captureReferral(window.localStorage, window.location.search); } catch { /* Storage is optional. */ }
-    return () => { document.title = title; };
-  }, []);
+  useMarketingPage("Download Delimt for Android");
 
-  return <div className="dl-page">
+  return <div className="mk-page dl-page">
     <a className="dl-skip" href="#download-main">Skip to download</a>
-    <header className="dl-header">
-      <Link to="/" aria-label="Delimt home"><img src={logo} alt="delimt" /></Link>
-      <nav aria-label="Download navigation">
-        <a href="#setup">Installation guide</a>
-        <Link to="/app">Open web app <Arrow /></Link>
-      </nav>
-    </header>
+    <MarketingHeader page="download" />
 
     <main id="download-main">
       <section className="dl-hero" aria-labelledby="download-title">
@@ -93,6 +76,6 @@ export default function Download() {
       {ready && <details className="dl-file-details"><summary>Download details and file checksum</summary><dl><dt>Version</dt><dd>{androidRelease.version} {androidRelease.versionCode ? `(build ${androidRelease.versionCode})` : ""}</dd><dt>File size</dt><dd>{androidSizeLabel(androidRelease.byteSize)}</dd><dt>SHA-256</dt><dd className="dl-checksum">{androidRelease.sha256}</dd></dl><p>The checksum identifies this exact APK file.</p></details>}
     </main>
 
-    <footer className="dl-footer"><span>© 2026 delimt</span><nav aria-label="Footer"><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/">Home <Arrow /></Link></nav></footer>
+    <MarketingFooter />
   </div>;
 }
